@@ -20,7 +20,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                sh 'docker run --rm -v "$PWD":/app -w /app node:22-bookworm-slim node --check index-1.js'
+                sh 'docker run --rm -v "$PWD":/app -w /app node:22-bookworm-slim node --check index.js'
             }
         }
 
