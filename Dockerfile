@@ -1,3 +1,12 @@
+FROM node:22-bookworm-slim AS test
+
+WORKDIR /app
+
+COPY index-1.js ./
+
+RUN node --check index-1.js
+
+
 FROM node:22-bookworm-slim
 
 WORKDIR /app
@@ -10,7 +19,8 @@ COPY index-1.js ./
 
 USER node
 EXPOSE 3000
+
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-	CMD node -e "require('http').get('http://127.0.0.1:3000/health', response => process.exit(response.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
+    CMD node -e "require('http').get('http://127.0.0.1:3000/health', response => process.exit(response.statusCode === 200 ? 0 : 1)).on('error', () => process.exit(1))"
 
 CMD ["npm", "start"]
