@@ -18,12 +18,12 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'pwd && ls -la && git status && git ls-files'
-                sh 'node --check index-1.js'
-            }
-        }
+       stage('Test') {
+    steps {
+        sh 'pwd && ls -la && git status && git ls-files'
+        sh 'docker build --target test -t $APP_NAME:test .'
+    }
+}
 
         stage('Build image') {
             steps {
