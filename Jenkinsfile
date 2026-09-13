@@ -18,12 +18,13 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'docker run --rm -v "$PWD":/app -w /app node:22-bookworm-slim node --check index-1.js'
-            }
-        }
-
+       stage('Test') {
+    steps {
+        sh 'pwd && ls -la && git status && git ls-files'
+        sh 'docker run --rm -v "$PWD":/app -w /app node:22-bookworm-slim ls -la /app'
+        sh 'docker run --rm -v "$PWD":/app -w /app node:22-bookworm-slim node --check index-1.js'
+    }
+}
         stage('Build image') {
             steps {
                 script {
