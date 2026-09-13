@@ -1,3 +1,4 @@
+```groovy
 pipeline {
     agent any
 
@@ -28,9 +29,9 @@ pipeline {
                 script {
                     env.IMAGE_TAG = "${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
                     sh 'docker build --pull -t $APP_NAME:$IMAGE_TAG .'
+                }
             }
         }
-    }
 
         stage('Push image') {
             when {
@@ -42,7 +43,11 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: env.REGISTRY_CREDENTIALS, usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+                    withCredentials([usernamePassword(
+                        credentialsId: env.REGISTRY_CREDENTIALS,
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )]) {
                         sh '''
                             set +x
                             echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
@@ -69,4 +74,6 @@ pipeline {
         always {
             sh 'docker image rm "$APP_NAME:$IMAGE_TAG" 2>/dev/null || true'
         }
+    }
 }
+```
