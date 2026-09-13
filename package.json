@@ -1,0 +1,13 @@
+{
+  "name": "nodejs-docker-exercise",
+  "version": "1.0.0",
+  "description": "Simple Express app for a Docker training exercise",
+  "main": "index-1.js",
+  "scripts": {
+    "start": "node index-1.js",
+    "test": "node --check index-1.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
